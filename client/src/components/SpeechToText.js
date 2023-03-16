@@ -22,7 +22,7 @@ const SpeechToText = () => {
       ],
     },
   ]
-  
+
   const [author, setAuthor] = useState('')
   const [book, setBook] = useState('')
   const [ans, setAns] = useState('')
