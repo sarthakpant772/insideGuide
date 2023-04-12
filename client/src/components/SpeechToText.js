@@ -13,7 +13,7 @@ const SpeechToText = () => {
       books: [
         {
           name: 'parking on the beach',
-          path: 'Go right, Go left, Go straight',
+          path: 'Go right, Go right, Go straight',
         },
         {
           name: 'parking on the bed',
