@@ -1,30 +1,22 @@
-import { Button, Container } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import React, { useState } from 'react'
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 import { useSpeechSynthesis } from 'react-speech-kit'
+import { useDispatch } from 'react-redux'
+import { addAuthor, addName, addPath } from '../features/book/bookSlice'
+import { useNavigate } from 'react-router-dom'
+import paths from '../json/path.json'
 const SpeechToText = () => {
   const { speak } = useSpeechSynthesis()
+  const dispatch = useDispatch()
 
-  const paths = [
-    {
-      author: 'Sarthak',
-      books: [
-        {
-          name: 'parking on the beach',
-          path: 'Go right, Go right, Go straight',
-        },
-        {
-          name: 'parking on the bed',
-          path: 'Go right, Go left, Go straight',
-        },
-      ],
-    },
-  ]
+  const navigate = useNavigate()
 
-  const [author, setAuthor] = useState('')
-  const [book, setBook] = useState('')
+  const [num, setNum] = useState(0)
+  const [author, setAuthor] = useState('check')
+  const [book, setBook] = useState('parking on the bed')
   const [ans, setAns] = useState('')
   const {
     transcript,
@@ -44,7 +36,6 @@ const SpeechToText = () => {
   const stopListenBook = () => {
     setBook(transcript)
     SpeechRecognition.startListening()
-
     // const fil = path.filter(author)
   }
 
@@ -58,17 +49,14 @@ const SpeechToText = () => {
       if (b.name === book) return b.path
     })
     console.log(check)
-    // try {
-    setAns(check)
-    // } catch (err) {
-    console.log(ans)
-    // } finally {
-    speak({ text: ans })
-    // }
+    dispatch(addName(book))
+    dispatch(addAuthor(author))
+    dispatch(addPath(check))
+    navigate('/textToSpeech')
   }
 
   return (
-    <div>
+    <Box sx={{ backgroundColor: '#ef233c', margin: 0 }}>
       <p>Microphone: {listening ? 'on' : 'off'}</p>
       <h1>Author</h1>
       <button onClick={SpeechRecognition.startListening}>Start</button>
@@ -80,8 +68,7 @@ const SpeechToText = () => {
       <button onClick={stopListenBook}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
       <p>{book}</p>
-
-      <Container>
+      <Box>
         <Button
           onClick={() => {
             handleSpeak()
@@ -89,8 +76,8 @@ const SpeechToText = () => {
         >
           Listen
         </Button>
-      </Container>
-    </div>
+      </Box>
+    </Box>
   )
 }
 

@@ -3,13 +3,20 @@ import SpeechToText from './components/SpeechToText'
 import TextToSpeech from './components/TextToSpeech'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Box } from '@mui/material'
 const App = () => {
   return (
-    <div>
+    <Box sx={{ margin: 0 }}>
       <Provider store={store}>
-        <SpeechToText />
+        <Router>
+          <Routes>
+            <Route path="/" element={<SpeechToText />} />
+            <Route path="/textToSpeech" element={<TextToSpeech />} />
+          </Routes>
+        </Router>
       </Provider>
-    </div>
+    </Box>
   )
 }
 

@@ -1,0 +1,15 @@
+[
+  {
+    "author": "check",
+    "books": [
+      {
+        "name": "check",
+        "path": ["Go Right", "Go Right", "Go Straight"]
+      },
+      {
+        "name": "parking on the bed",
+        "path": ["Go Right", "Go Left", "Go Straight"]
+      }
+    ]
+  }
+]

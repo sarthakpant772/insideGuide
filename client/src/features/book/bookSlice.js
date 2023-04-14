@@ -4,29 +4,26 @@ const initialState = {
   value: 0,
   author: '',
   name: '',
+  path: {},
 }
 
 export const bookSlice = createSlice({
   name: 'book',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
+    addName: (state, action) => {
+      state.name = action.payload
     },
-    decrement: (state) => {
-      state.value -= 1
+    addAuthor: (state, action) => {
+      state.author = action.payload
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    addPath: (state, action) => {
+      state.path = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = bookSlice.actions
+export const { addName, addAuthor, addPath } = bookSlice.actions
 
 export default bookSlice.reducer
