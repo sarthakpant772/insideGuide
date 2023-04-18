@@ -9,7 +9,7 @@ const TextToSpeech = () => {
   const [left, setLeft] = useState(false)
   const [right, setRight] = useState(true)
 
-  const [stepNumber, setSteoNumber] = useState(0)
+  const [stepNumber, setSteoNumber] = useState(-1)
   const [text, setText] = useState(path)
   const { speak } = useSpeechSynthesis()
 
@@ -20,7 +20,7 @@ const TextToSpeech = () => {
   const handleOnClick = () => {
     console.log(path[1], stepNumber, 'check')
     speak({ text: path[1][stepNumber] })
-    console.log(path[1][stepNumber])
+    // console.log(path[1][stepNumber])
   }
 
   const previousStep = () => {
@@ -33,14 +33,13 @@ const TextToSpeech = () => {
     // handleOnClick()
   }
   const nextStep = () => {
-    console.log(path[1].length)
-    if (stepNumber > path[1].length) {
+    console.log('this is length', path[1].length)
+    if (stepNumber >= path[1].length - 1) {
       setRight(false)
     } else {
       setSteoNumber(stepNumber + 1)
       setLeft(true)
     }
-    console.log(path[1].length)
 
     // handleOnClick()
   }
