@@ -5,13 +5,15 @@ import { store } from './app/store'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Box } from '@mui/material'
+import Login from './components/Login'
 const App = () => {
   return (
-    <Box sx={{ margin: 0 }}>
+    <Box sx={{ margin: '0px' }}>
       <Provider store={store}>
         <Router>
           <Routes>
-            <Route path="/" element={<SpeechToText />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/library" element={<SpeechToText />} />
             <Route path="/textToSpeech" element={<TextToSpeech />} />
           </Routes>
         </Router>
