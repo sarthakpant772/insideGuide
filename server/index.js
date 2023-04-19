@@ -1,6 +1,7 @@
 const express = require("express");
-const noteRouter = require("./noteRoutes");
-const userRouter = require("./userRoutes");
+const noteRouter = require("./routes/noteRoutes");
+const userRouter = require("./routes/userRoutes");
+const bookRouter = require("./routes/bookRoutes");
 const app = express();
 
 const mongoose = require("mongoose");
@@ -15,6 +16,8 @@ app.use((req, res, next)=>{
 
 app.use("/users",userRouter);
 app.use("/note",noteRouter);
+
+app.use("/book",bookRouter);
 
 app.get("/",(req,res)=>{
     res.send("Hello");

@@ -1,5 +1,5 @@
 {
-  "name": "insideGuide",
+  "name": "insideguide",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/sarthakpant772/insideGuide.git",
@@ -15,4 +15,3 @@
     "nodemon": "^2.0.21"
   }
 }
-
