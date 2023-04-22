@@ -4,7 +4,8 @@ const BookSchema=mongoose.Schema({
 
     author:{
         type: String ,
-        required : true
+        required : true,
+        unique: true
 
     },
 
@@ -13,7 +14,11 @@ const BookSchema=mongoose.Schema({
             {
                 name: String,
                 quantity: String,
-                shelfNo: Number,
+                shelfNo:{ 
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "Shelf",
+                    required: true
+                }
             },
         ],
 

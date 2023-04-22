@@ -17,4 +17,4 @@ const shelfSchema= mongoose.Schema({
 
 
 
-module.exports = mongoose.model("Shelf",schelfShema)
+module.exports = mongoose.model("Shelf",shelfSchema)
