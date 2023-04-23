@@ -2,21 +2,22 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import axios from 'axios'
 import login from '../images/login.jpg'
-const Login = () => {
-  const [email, setEmail] = useState('sarthak.pant31@gmail.com')
-  const [password, setPassword] = useState('123')
-
+const Register = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const handleSubmit = async () => {
     console.log(email)
     console.log(password)
     try {
-      const res = await axios.post('http://localhost:5000/users/signin', {
+      const res = await axios.post('http://localhost:5000/users/signup', {
         email,
         password,
+        username,
       })
 
       localStorage.setItem('token', res.data.token)
-      console.log(res.data.token)
+      console.log(res)
     } catch (error) {
       console.log(error)
     }
@@ -77,7 +78,7 @@ const Login = () => {
               justifyContent: 'center',
             }}
           >
-            <Typography variant="h3">Login</Typography>
+            <Typography variant="h3">Register</Typography>
           </Box>
           <Box
             sx={{
@@ -91,10 +92,18 @@ const Login = () => {
           >
             <TextField
               id="email"
-              label="email"
+              label="Email"
               variant="filled"
               onChange={(e) => {
                 setEmail(e.target.value)
+              }}
+            />
+            <TextField
+              id="Username"
+              label="Username"
+              variant="filled"
+              onChange={(e) => {
+                setUsername(e.target.value)
               }}
             />
             <TextField
@@ -129,4 +138,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
