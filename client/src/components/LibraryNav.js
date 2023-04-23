@@ -65,6 +65,7 @@ const LibraryNav = () => {
               aria-haspopup="true"
               // onClick={handleProfileMenuOpen}
               color="inherit"
+              onClick={() => navigate('/admin/checkUser')}
             >
               <AccountCircle />
             </IconButton>

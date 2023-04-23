@@ -11,6 +11,9 @@ import Library from './components/Library'
 import AddBooks from './components/AddBooks'
 import AddNewBooks from './components/AddNewBooks'
 import AddNewShelf from './components/AddNewShelf'
+import SearchUser from './components/SearchUser'
+import UserDetails from './components/UserDetails'
+import IssueBook from './components/IssueBook'
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
@@ -25,6 +28,10 @@ const App = () => {
               <Route path="addBooks" element={<AddBooks />}>
                 <Route path="book" element={<AddNewBooks />} />
                 <Route path="shelf" element={<AddNewShelf />} />
+              </Route>
+              <Route path="checkUser" element={<SearchUser />}>
+                <Route path="user" element={<UserDetails />} />
+                <Route path="book" element={<IssueBook />} />
               </Route>
             </Route>
           </Routes>
