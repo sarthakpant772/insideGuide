@@ -3,14 +3,16 @@ const mongoose = require("mongoose")
 
 const shelfSchema= mongoose.Schema({
 
-    lane:{
-        type: String ,
-        required:true,
+    name:{type:String,
+        unique: true,
     },
-
-    location:{
-        type:String,
-        required:true
+    path:{
+        type:[
+            {
+                service:String
+            }
+        ],
+        default:[]
     }
 
 },{timestamps: true})

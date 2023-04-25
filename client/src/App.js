@@ -14,6 +14,7 @@ import AddNewShelf from './components/AddNewShelf'
 import SearchUser from './components/SearchUser'
 import UserDetails from './components/UserDetails'
 import IssueBook from './components/IssueBook'
+import UserLogin from './components/UserLogin'
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/library" element={<SpeechToText />} />
             <Route path="/textToSpeech" element={<TextToSpeech />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="/loginUser" element={<UserLogin />} />
             <Route path="admin" element={<Library />}>
               <Route path="addBooks" element={<AddBooks />}>
                 <Route path="book" element={<AddNewBooks />} />
