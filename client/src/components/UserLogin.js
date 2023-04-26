@@ -5,6 +5,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition'
 import { useSpeechSynthesis } from 'react-speech-kit'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import {
   addAuthor,
   addBookName,
@@ -47,15 +48,26 @@ const UserLogin = () => {
     }
   }
 
-  const stopCheck = () => {
+  const stopCheck = async () => {
     setName(transcript)
     console.log(transcript)
     dispatch(addUserName(transcript))
     if (transcript === 'ok') {
-      speak({ text: 'username confirm' })
-      speak({ text: 'tap and speak author of the book' })
-      dispatch(addBookName(name))
-      navigate('/getAuthor')
+      try {
+        const res = await axios.post('http://localhost:5000/users/signin', {
+          username: name,
+          password: '123',
+        })
+        speak({ text: 'username confirm' })
+        speak({ text: 'tap and speak author of the book' })
+        dispatch(addBookName(name))
+
+        console.log(res.data.token)
+        localStorage.setItem('token', res.data.token)
+        navigate('/getAuthor')
+      } catch (error) {
+        speak({ text: 'User name not confirmed speak again' })
+      }
     } else {
       setConfirm(false)
     }

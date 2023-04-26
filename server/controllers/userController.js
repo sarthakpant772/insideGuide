@@ -27,11 +27,11 @@ const signup = async (req, res) => {
 }
 
 const signin = async (req, res) => {
-  const { email, password } = req.body
-  console.log(email)
+  const { username, password } = req.body
+  console.log(username)
   console.log(password)
   try {
-    const existingUser = await userModel.findOne({ email: email })
+    const existingUser = await userModel.findOne({ username: username })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
@@ -52,16 +52,6 @@ const signin = async (req, res) => {
   }
 }
 
-
-// const bookReturn=async (req,res)=>{
-//       try {
-//         const data = await
-        
-//       } catch (error) {
-        
-//       }
-
-// }
 
 
 module.exports = { signup, signin }

@@ -1,3 +1,4 @@
+const auth = require('../middlewares/auth')
 const author = require('../models/author')
 const books = require('../models/books')
 const shelf = require('../models/shelf')
@@ -13,26 +14,26 @@ const addAuthor = async (req, res) => {
   } catch (err) {
     res.status(500).json(err)
   }
-}
 
-const author = req.body.author
-try {
-  const savedData = await books.findOneAndUpdate(
-    {
-      author: author,
-    },
-    {
-      $push: {
-        book: {
-          name: req.body.book.name,
-          quantity: req.body.book.quantity,
+  const author = req.body.author
+  try {
+    const savedData = await books.findOneAndUpdate(
+      {
+        author: author,
+      },
+      {
+        $push: {
+          book: {
+            name: req.body.book.name,
+            quantity: req.body.book.quantity,
+          },
         },
       },
-    },
-  )
-  res.status(200).json(savedData)
-} catch (err) {
-  res.status(500).json(err)
+    )
+    res.status(200).json(savedData)
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
 
 const addShelf = async (req, res) => {
@@ -109,8 +110,31 @@ const incBook = async (req, res) => {
   }
 }
 
+const getAuthor = async (req, res) => {
+  try {
+    const data = await author.find()
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const getBookByName = async (req, res) => {
+  try {
+    const data = await book.findOne({
+      book: res.body.book,
+      author: res.body.author,
+    })
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 module.exports = {
   addAuthor,
   addBook,
   getShelf,
+  getAuthor,
+  getBookByName,
 }

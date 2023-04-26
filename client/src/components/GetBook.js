@@ -6,7 +6,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition'
 import { useSpeechSynthesis } from 'react-speech-kit'
 import MicOffIcon from '@mui/icons-material/MicOff'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addBookName, addName, getBookPath } from '../features/book/bookSlice'
 import { Navigate, useNavigate } from 'react-router-dom'
 const GetBook = () => {
@@ -15,6 +15,7 @@ const GetBook = () => {
   const [book, setBook] = useState()
   const dispatch = useDispatch()
   const { speak } = useSpeechSynthesis()
+  const author = useSelector((state) => state.book.author)
   const {
     transcript,
     listening,
@@ -25,8 +26,8 @@ const GetBook = () => {
   const stopCheck = async () => {
     if (transcript === 'ok') {
       speak({ text: 'Book confirmed' })
-      const check = await dispatch(addBookName(book))
-      const check1 = await dispatch(getBookPath())
+      dispatch(addBookName(book))
+      const bookData = await 
       speak({
         text: 'tap on right for next direction and left for previous direction',
       })
