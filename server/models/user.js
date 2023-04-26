@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const books = require("./books");
 
 const UserSchema = mongoose.Schema({
 
@@ -13,6 +14,16 @@ const UserSchema = mongoose.Schema({
     email : {
         type : String,
         required : true
+    },
+
+    books : {
+       type: [
+        {
+            name:String,
+            book_id:String
+        }
+
+        ]
     }
 
 },{timestamps : true} );

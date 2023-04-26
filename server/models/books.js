@@ -2,31 +2,24 @@ const mongoose = require("mongoose");
 
 const BookSchema=mongoose.Schema({
 
-    author:{
-        type: String ,
-        required : true,
-        unique: true
-
-    },
+    
 
     book:{
-        type:[
-            {
-                name: String,
-                quantity: String,
-                shelfNo:{ 
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "Shelf",
-                    required: true
-                }
-            },
-        ],
+        type:String,
+        reqired: true,
+        
+    },
 
-    default:[]  ,  
-    }
+    author:{
+            type: String ,
+            required : true,
 
+        },
+        
+    quantity :String,
 
-    
+    shelfName: String
+
 },{timestamps: true});
 
 module.exports=mongoose.model("Books",BookSchema);
