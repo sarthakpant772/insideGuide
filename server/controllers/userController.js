@@ -1,7 +1,7 @@
 const userModel = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const SECRET_KEY = ' NOTESAPI'
+const SECRET_KEY = 'SARTHAKPANT'
 
 const signup = async (req, res) => {
   const { username, email, password } = req.body

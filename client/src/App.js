@@ -15,6 +15,8 @@ import SearchUser from './components/SearchUser'
 import UserDetails from './components/UserDetails'
 import IssueBook from './components/IssueBook'
 import UserLogin from './components/UserLogin'
+import GetAuthor from './components/GetAuthor'
+import GetBook from './components/GetBook'
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
@@ -36,6 +38,8 @@ const App = () => {
                 <Route path="book" element={<IssueBook />} />
               </Route>
             </Route>
+            <Route path="/getAuthor" element={<GetAuthor />} />
+            <Route path="/getBook" element={<GetBook />} />
           </Routes>
         </Router>
       </Provider>
