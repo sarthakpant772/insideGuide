@@ -75,7 +75,7 @@ const addBook = async (req, res) => {
     book: req.body.book,
     author: req.body.author,
     quantity: req.body.quantity,
-    shelfName: req.body.shelf,
+    shelfName: req.body.shelfName,
   })
   try {
     const savedData = await data.save()
@@ -120,10 +120,12 @@ const getAuthor = async (req, res) => {
 }
 
 const getBookByName = async (req, res) => {
+  const { book, author } = req.body
+  //   console.log(req)
   try {
-    const data = await book.findOne({
-      book: res.body.book,
-      author: res.body.author,
+    const data = await books.findOne({
+      book: book,
+      author: author,
     })
     res.status(200).json(data)
   } catch (err) {

@@ -13,7 +13,7 @@ const bookrouter = express.Router()
 bookrouter.post('/addAuthor', auth, addAuthor)
 bookrouter.post('/addBook', auth, addBook)
 bookrouter.get('/getShelf', auth, getShelf)
-bookrouter.get('/getAuthor', getAuthor)
-bookrouter.get('/getBookByName', getBookByName)
+bookrouter.get('/getAuthor', auth, getAuthor)
+bookrouter.post('/getBookByName', getBookByName)
 
 module.exports = bookrouter
