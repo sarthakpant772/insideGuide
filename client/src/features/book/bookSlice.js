@@ -6,6 +6,7 @@ const initialState = {
   author: '',
   name: '',
   path: {},
+  useType: '',
 }
 
 export const getBookPath = createAsyncThunk(
@@ -43,6 +44,9 @@ export const bookSlice = createSlice({
     addUserName: (state, action) => {
       state.userName = action.payload
     },
+    addUseType: (state, action) => {
+      state.useType = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getBookPath.fulfilled, (state, action) => {
@@ -57,6 +61,7 @@ export const {
   addAuthor,
   addPath,
   addUserName,
+  addUseType,
 } = bookSlice.actions
 
 export default bookSlice.reducer

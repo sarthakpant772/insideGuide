@@ -12,21 +12,19 @@ import {
   addName,
   addPath,
   addUserName,
+  addUseType,
 } from '../features/book/bookSlice'
 import { useNavigate } from 'react-router-dom'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import MicOffIcon from '@mui/icons-material/MicOff'
 import paths from '../json/path.json'
-const UserLogin = () => {
-  const { speak } = useSpeechSynthesis()
+
+const Check = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { speak } = useSpeechSynthesis()
   const [confirm, setConfirm] = useState(false)
   const [name, setName] = useState('')
-  //make it false in real life situation
-  // useEffect(() => {
-  //   SpeechRecognition.stopListening()
-  // }, [name])
   const {
     transcript,
     listening,
@@ -36,13 +34,16 @@ const UserLogin = () => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>
   }
+  const listenStart = () => {
+    SpeechRecognition.startListening()
+  }
 
   const stopListenAuthor = () => {
     console.log(transcript)
     if (transcript.length !== 0) {
       setName(transcript)
       setConfirm(true)
-      speak({ text: 'Your username is ' })
+      speak({ text: 'You want to' })
       speak({ text: transcript })
       speak({ text: 'tap and speak ok to confirm else say reset ' })
     }
@@ -51,30 +52,22 @@ const UserLogin = () => {
   const stopCheck = async () => {
     setName(transcript)
     console.log(transcript)
-    dispatch(addUserName(transcript))
-    if (transcript === 'ok') {
-      try {
-        const res = await axios.post('http://localhost:5000/users/signin', {
-          username: name,
-          password: '123',
-        })
-        speak({ text: 'username confirm' })
-        speak({text:'If you want to return book speak return else speak issue'})
-        dispatch(addUserName(name))
 
-        console.log(res.data.token)
-        localStorage.setItem('token', res.data.token)
-        navigate('/getUseType')
-      } catch (error) {
-        speak({ text: 'Username not confirmed speak again' })
+    if (transcript === 'ok') {
+      speak({ text: 'UseType confirm' })
+
+      if (name === 'return') {
+        dispatch(addUseType('return'))
+        speak({ text: 'tap to speak author' })
+        navigate('/return')
+      } else {
+        dispatch(addUseType('issue'))
+        navigate('/getAuthor')
+        speak({ text: 'tap to speak author' })
       }
     } else {
       setConfirm(false)
     }
-  }
-
-  const listenStart = () => {
-    SpeechRecognition.startListening()
   }
 
   return (
@@ -141,7 +134,7 @@ const UserLogin = () => {
               }}
               onClick={listenStart}
             >
-              Tap to speak your User name
+              Tap to speak Use Type
               <KeyboardVoiceIcon />
             </Button>
           )}
@@ -151,4 +144,4 @@ const UserLogin = () => {
   )
 }
 
-export default UserLogin
+export default Check

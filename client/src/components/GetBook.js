@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -16,8 +16,11 @@ const GetBook = () => {
   const [book, setBook] = useState()
   const dispatch = useDispatch()
   const { speak } = useSpeechSynthesis()
+  useEffect(() => {
+    SpeechRecognition.stopListening()
+  }, [book])
   // const author = useSelector((state) => state.book.author)
-  const author = 'pant'
+  const author = 'Aastha'
   const {
     transcript,
     listening,

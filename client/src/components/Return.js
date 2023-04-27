@@ -1,32 +1,21 @@
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition'
 import { useSpeechSynthesis } from 'react-speech-kit'
-import { useDispatch } from 'react-redux'
-import axios from 'axios'
-import {
-  addAuthor,
-  addBookName,
-  addName,
-  addPath,
-  addUserName,
-} from '../features/book/bookSlice'
-import { useNavigate } from 'react-router-dom'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import MicOffIcon from '@mui/icons-material/MicOff'
-import paths from '../json/path.json'
-const UserLogin = () => {
+import { useDispatch } from 'react-redux'
+import { addAuthor } from '../features/book/bookSlice'
+import { useNavigate } from 'react-router-dom'
+
+const Return = () => {
   const { speak } = useSpeechSynthesis()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [author, setAuthor] = useState('')
   const [confirm, setConfirm] = useState(false)
-  const [name, setName] = useState('')
-  //make it false in real life situation
-  // useEffect(() => {
-  //   SpeechRecognition.stopListening()
-  // }, [name])
   const {
     transcript,
     listening,
@@ -37,44 +26,34 @@ const UserLogin = () => {
     return <span>Browser doesn't support speech recognition.</span>
   }
 
-  const stopListenAuthor = () => {
-    console.log(transcript)
-    if (transcript.length !== 0) {
-      setName(transcript)
-      setConfirm(true)
-      speak({ text: 'Your username is ' })
-      speak({ text: transcript })
-      speak({ text: 'tap and speak ok to confirm else say reset ' })
-    }
+  const listenStart = () => {
+    SpeechRecognition.startListening()
   }
 
-  const stopCheck = async () => {
-    setName(transcript)
-    console.log(transcript)
-    dispatch(addUserName(transcript))
-    if (transcript === 'ok') {
-      try {
-        const res = await axios.post('http://localhost:5000/users/signin', {
-          username: name,
-          password: '123',
-        })
-        speak({ text: 'username confirm' })
-        speak({text:'If you want to return book speak return else speak issue'})
-        dispatch(addUserName(name))
-
-        console.log(res.data.token)
-        localStorage.setItem('token', res.data.token)
-        navigate('/getUseType')
-      } catch (error) {
-        speak({ text: 'Username not confirmed speak again' })
-      }
+  const stopListenAuthor = () => {
+    if (transcript.length !== 0) {
+      setConfirm(true)
+      speak({ text: 'The name of the author is:' })
+      speak({ text: transcript })
+      setAuthor(transcript)
+      speak({ text: 'speak ok to continue else tap to speak again' })
     } else {
+      speak({ text: 'speak author name again' })
       setConfirm(false)
     }
   }
+  const stopCheck = () => {
+    if (transcript === 'ok') {
+      speak({ text: 'author confirmed and book returned' })
+      //   api of increasing
 
-  const listenStart = () => {
-    SpeechRecognition.startListening()
+      navigate('/getBook')
+
+      speak({text:'Tap to speak useType else close the '})
+    } else {
+      setConfirm(false)
+      speak({ text: 'tap to speak author name again' })
+    } 
   }
 
   return (
@@ -86,7 +65,6 @@ const UserLogin = () => {
         width: '100%',
       }}
     >
-      {/* changing size of Listen box */}
       {confirm ? (
         <Box sx={{ width: '100%', height: '100%' }}>
           {listening ? (
@@ -114,12 +92,12 @@ const UserLogin = () => {
             >
               <KeyboardVoiceIcon />
             </Button>
-          )}{' '}
+          )}
         </Box>
       ) : (
         <Box sx={{ width: '100%', height: '100%' }}>
           {listening ? (
-            <Box sx={{ width: '100%', height: '100%' }}>
+            <Box>
               <Button
                 sx={{
                   fontSize: '100em',
@@ -141,7 +119,7 @@ const UserLogin = () => {
               }}
               onClick={listenStart}
             >
-              Tap to speak your User name
+              listing author
               <KeyboardVoiceIcon />
             </Button>
           )}
@@ -151,4 +129,4 @@ const UserLogin = () => {
   )
 }
 
-export default UserLogin
+export default Return

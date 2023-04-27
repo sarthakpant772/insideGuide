@@ -4,7 +4,6 @@ const BookSchema = mongoose.Schema(
   {
     book: {
       type: String,
-  
     },
 
     author: {

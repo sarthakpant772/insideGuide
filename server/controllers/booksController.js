@@ -37,7 +37,7 @@ const addBook = async (req, res) => {
     quantity: req.body.quantity,
     shelfName: req.body.shelfName,
   })
- // console.log(data)
+  console.log(data)
   try {
     const savedData = await data.save()
     res.status(201).json(savedData)
