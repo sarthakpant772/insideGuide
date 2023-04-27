@@ -9,13 +9,15 @@ import MicOffIcon from '@mui/icons-material/MicOff'
 import { useDispatch, useSelector } from 'react-redux'
 import { addBookName, addName, getBookPath } from '../features/book/bookSlice'
 import { Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const GetBook = () => {
   const navigate = useNavigate()
   const [confirm, setConfirm] = useState(false)
   const [book, setBook] = useState()
   const dispatch = useDispatch()
   const { speak } = useSpeechSynthesis()
-  const author = useSelector((state) => state.book.author)
+  // const author = useSelector((state) => state.book.author)
+  const author = 'pant'
   const {
     transcript,
     listening,
@@ -24,10 +26,18 @@ const GetBook = () => {
   } = useSpeechRecognition()
 
   const stopCheck = async () => {
+    const token = localStorage.getItem('token')
     if (transcript === 'ok') {
       speak({ text: 'Book confirmed' })
       dispatch(addBookName(book))
-      const bookData = await 
+      const bookData = await axios.post(
+        'http://localhost:5000/book/getBookByName',
+        {
+          book: book,
+          author: author,
+        },
+      )
+      console.log(bookData.data)
       speak({
         text: 'tap on right for next direction and left for previous direction',
       })
