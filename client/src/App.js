@@ -15,14 +15,19 @@ import SearchUser from './components/SearchUser'
 import UserDetails from './components/UserDetails'
 import IssueBook from './components/IssueBook'
 import UserLogin from './components/UserLogin'
+<<<<<<< HEAD
+import HomePage from './components/HomePage'
+=======
 import GetAuthor from './components/GetAuthor'
 import GetBook from './components/GetBook'
+>>>>>>> 5cac23ec39c0d87f781e486a9ecedcf8bee78314
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
       <Provider store={store}>
         <Router>
           <Routes>
+          <Route path='/' element={<HomePage/>}/>
             <Route path="/login" element={<Login />} />
             <Route path="/library" element={<SpeechToText />} />
             <Route path="/textToSpeech" element={<TextToSpeech />} />

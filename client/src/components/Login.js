@@ -2,6 +2,8 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import axios from 'axios'
 import login from '../images/login.jpg'
+import Navbar from './Navbar'
+import lib from "./static/lib.jpg"
 const Login = () => {
   const [email, setEmail] = useState('sarthak.pant31@gmail.com')
   const [password, setPassword] = useState('123')
@@ -22,6 +24,8 @@ const Login = () => {
   }
 
   return (
+    <div>
+    <Navbar/>
     <Box
       sx={{
         width: '100%',
@@ -29,7 +33,7 @@ const Login = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'primary.main',
+        backgroundColor: 'white',
       }}
     >
       <Paper
@@ -51,7 +55,7 @@ const Login = () => {
           <Box
             componenr="img"
             sx={{ width: '100%', height: '100%' }}
-            src={login}
+            image={lib}
           />
         </Box>
 
@@ -125,6 +129,7 @@ const Login = () => {
         </Box>
       </Paper>
     </Box>
+    </div>
   )
 }
 
