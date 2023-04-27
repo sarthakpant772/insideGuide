@@ -11,9 +11,7 @@ const shelfSchema= mongoose.Schema({
     },
     path:{
         type:[
-            {
-                service:String
-            }
+            String
         ],
         default:[]
     }

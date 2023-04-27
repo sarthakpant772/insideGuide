@@ -59,8 +59,8 @@ const getBook = async (req,res)=>{
 
 const incBook = async(req,res)=>{
 
-    const author = req.body.books.author
-    const book = req.body.books.book
+    const author = req.body.author
+    const book = req.body.book
 
     try{
         const prevdata = await books.findOne({
@@ -85,8 +85,8 @@ const incBook = async(req,res)=>{
 
 
 const decBook= async(req,res)=>{
-    const author = req.body.books.author
-    const book = req.body.books.book
+    const author = req.body.author
+    const book = req.body.book
 
     try{
         const prevdata = await books.findOne({
@@ -120,4 +120,4 @@ const getBookByName = async (req, res) => {
 }
 
 
-module.exports={addAuthor,addBook,getAuthor,getBook,incBook,decBook}
+module.exports={addAuthor,addBook,getAuthor,getBook,incBook,decBook,getBookByName}
