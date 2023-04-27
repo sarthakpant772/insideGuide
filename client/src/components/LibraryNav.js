@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import React from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
+import Face2Icon from '@mui/icons-material/Face2';
 import SearchIcon from '@mui/icons-material/Search'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MailIcon from '@mui/icons-material/Mail'
@@ -28,7 +29,7 @@ const LibraryNav = () => {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            inSideGuide
+          Y<Face2Icon fontSize='small'/>urLib
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />

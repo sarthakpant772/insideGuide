@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material'
+import { Box, Button, Container, IconButton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -81,7 +81,7 @@ const SpeechToText = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '#ef233c',
+        backgroundColor: '#f5f0f1',
         margin: 0,
         height: '100vh',
         width: '100%',
@@ -97,7 +97,9 @@ const SpeechToText = () => {
               handleSpeak()
             }}
           >
+          <IconButton aria-label="mic" size='large'>
             Listen
+            </IconButton>
           </Button>
         </Box>
       ) : (
@@ -115,7 +117,9 @@ const SpeechToText = () => {
                     }}
                     onClick={stopListenAuthor}
                   >
+                  <IconButton aria-label="mic" size='large'>
                     <MicOffIcon />
+                    </IconButton>
                   </Button>
                 </Box>
               ) : (
@@ -148,7 +152,9 @@ const SpeechToText = () => {
                   }}
                   onClick={stopListenBook}
                 >
+                <IconButton aria-label="mic" size='large'>
                   <MicOffIcon />
+                  </IconButton>
                 </Button>
               ) : (
                 <Button

@@ -15,12 +15,14 @@ import SearchUser from './components/SearchUser'
 import UserDetails from './components/UserDetails'
 import IssueBook from './components/IssueBook'
 import UserLogin from './components/UserLogin'
+import HomePage from './components/HomePage'
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
       <Provider store={store}>
         <Router>
           <Routes>
+          <Route path='/' element={<HomePage/>}/>
             <Route path="/login" element={<Login />} />
             <Route path="/library" element={<SpeechToText />} />
             <Route path="/textToSpeech" element={<TextToSpeech />} />
