@@ -12,7 +12,7 @@ const BookSchema = mongoose.Schema(
       required: true,
     },
 
-    quantity: String,
+    quantity: Number,
 
     shelfName: String,
   },
