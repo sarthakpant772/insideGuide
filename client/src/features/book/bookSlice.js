@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import paths from '../../json/path.json'
 const initialState = {
   value: 0,
   userName: '',
@@ -8,11 +8,30 @@ const initialState = {
   path: {},
 }
 
+export const getBookPath = createAsyncThunk(
+  'book/getBookPath',
+  async ({ getState }) => {
+    const state = getState()
+    console.log(state)
+    console.log('check redux', state.author, state.name)
+
+    const fil = paths.map((path) => {
+      if (path.author === state.author) return path
+    })
+    console.log(fil[0].books)
+    const check = fil[0].books.map((b) => {
+      console.log(b)
+      if (b.name === state.name) return b.path
+    })
+    return check
+  },
+)
+
 export const bookSlice = createSlice({
   name: 'book',
   initialState,
   reducers: {
-    addName: (state, action) => {
+    addBookName: (state, action) => {
       state.name = action.payload
     },
     addAuthor: (state, action) => {
@@ -25,9 +44,19 @@ export const bookSlice = createSlice({
       state.userName = action.payload
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getBookPath.fulfilled, (state, action) => {
+      state.path = action.payload
+    })
+  },
 })
 
 // Action creators are generated for each case reducer function
-export const { addName, addAuthor, addPath, addUserName } = bookSlice.actions
+export const {
+  addBookName,
+  addAuthor,
+  addPath,
+  addUserName,
+} = bookSlice.actions
 
 export default bookSlice.reducer

@@ -3,14 +3,15 @@ const mongoose = require("mongoose")
 
 const shelfSchema= mongoose.Schema({
 
-    name:{type:String,
-        unique: true,
+    name:{
+        type:String,
+        required: true,
+        unique: true
+
     },
     path:{
         type:[
-            {
-                service:String
-            }
+            String
         ],
         default:[]
     }

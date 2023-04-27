@@ -22,10 +22,6 @@ app.use('/note', noteRouter)
 
 app.use('/book', bookRouter)
 
-app.get('/', (req, res) => {
-  res.send('Hello')
-})
-
 mongoose
   .connect(
     'mongodb+srv://admin:12345@cluster0.jkgv7sp.mongodb.net/?retryWrites=true&w=majority',

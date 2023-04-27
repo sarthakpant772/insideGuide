@@ -1,7 +1,7 @@
 const userModel = require('../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const SECRET_KEY = ' NOTESAPI'
+const SECRET_KEY = 'SARTHAKPANT'
 
 const signup = async (req, res) => {
   const { username, email, password } = req.body
@@ -27,11 +27,11 @@ const signup = async (req, res) => {
 }
 
 const signin = async (req, res) => {
-  const { email, password } = req.body
-  console.log(email)
+  const { username, password } = req.body
+  console.log(username)
   console.log(password)
   try {
-    const existingUser = await userModel.findOne({ email: email })
+    const existingUser = await userModel.findOne({ username: username })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
@@ -51,5 +51,7 @@ const signin = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong' })
   }
 }
+
+
 
 module.exports = { signup, signin }

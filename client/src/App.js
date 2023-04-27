@@ -15,7 +15,12 @@ import SearchUser from './components/SearchUser'
 import UserDetails from './components/UserDetails'
 import IssueBook from './components/IssueBook'
 import UserLogin from './components/UserLogin'
+<<<<<<< HEAD
 import HomePage from './components/HomePage'
+=======
+import GetAuthor from './components/GetAuthor'
+import GetBook from './components/GetBook'
+>>>>>>> 5cac23ec39c0d87f781e486a9ecedcf8bee78314
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
@@ -38,6 +43,8 @@ const App = () => {
                 <Route path="book" element={<IssueBook />} />
               </Route>
             </Route>
+            <Route path="/getAuthor" element={<GetAuthor />} />
+            <Route path="/getBook" element={<GetBook />} />
           </Routes>
         </Router>
       </Provider>

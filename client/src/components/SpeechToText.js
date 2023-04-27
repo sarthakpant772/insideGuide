@@ -5,7 +5,12 @@ import SpeechRecognition, {
 } from 'react-speech-recognition'
 import { useSpeechSynthesis } from 'react-speech-kit'
 import { useDispatch } from 'react-redux'
-import { addAuthor, addName, addPath } from '../features/book/bookSlice'
+import {
+  addAuthor,
+  addBookName,
+  addName,
+  addPath,
+} from '../features/book/bookSlice'
 import { useNavigate } from 'react-router-dom'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import MicOffIcon from '@mui/icons-material/MicOff'
@@ -67,7 +72,7 @@ const SpeechToText = () => {
       if (b.name === book) return b.path
     })
     console.log(check)
-    dispatch(addName(book))
+    dispatch(addBookName(book))
     dispatch(addAuthor(author))
     dispatch(addPath(check))
     navigate('/textToSpeech')
