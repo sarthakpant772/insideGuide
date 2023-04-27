@@ -64,13 +64,18 @@ const GetAuthor = () => {
       {confirm ? (
         <Box sx={{ width: '100%', height: '100%' }}>
           {listening ? (
-            <Box sx={{ width: '100%', height: '100%' }}>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#007f5f',
+              }}
+            >
               <Button
                 sx={{
-                  fontSize: '100em',
                   width: '100%',
                   height: '100%',
-                  backgroundColor: '#fffff',
+                  color: '#ffff3f',
                 }}
                 onClick={stopCheck}
               >
@@ -93,13 +98,18 @@ const GetAuthor = () => {
       ) : (
         <Box sx={{ width: '100%', height: '100%' }}>
           {listening ? (
-            <Box>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#007f5f',
+              }}
+            >
               <Button
                 sx={{
-                  fontSize: '100em',
                   width: '100%',
                   height: '100%',
-                  backgroundColor: '#fffff',
+                  color: '#ffff3f',
                 }}
                 onClick={stopListenAuthor}
               >

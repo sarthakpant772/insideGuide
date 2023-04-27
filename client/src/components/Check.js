@@ -59,7 +59,7 @@ const Check = () => {
       if (name === 'return') {
         dispatch(addUseType('return'))
         speak({ text: 'tap to speak author' })
-        navigate('/return')
+        navigate('/getAuthor')
       } else {
         dispatch(addUseType('issue'))
         navigate('/getAuthor')
@@ -83,13 +83,18 @@ const Check = () => {
       {confirm ? (
         <Box sx={{ width: '100%', height: '100%' }}>
           {listening ? (
-            <Box sx={{ width: '100%', height: '100%' }}>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#007f5f',
+              }}
+            >
               <Button
                 sx={{
-                  fontSize: '100em',
                   width: '100%',
                   height: '100%',
-                  backgroundColor: '#fffff',
+                  color: '#ffff3f',
                 }}
                 onClick={stopCheck}
               >
@@ -112,13 +117,18 @@ const Check = () => {
       ) : (
         <Box sx={{ width: '100%', height: '100%' }}>
           {listening ? (
-            <Box sx={{ width: '100%', height: '100%' }}>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#007f5f',
+              }}
+            >
               <Button
                 sx={{
-                  fontSize: '100em',
                   width: '100%',
                   height: '100%',
-                  backgroundColor: '#fffff',
+                  color: '#ffff3f',
                 }}
                 onClick={stopListenAuthor}
               >

@@ -22,7 +22,7 @@ const GetBook = () => {
   // const username = 'Sarthak'
   // const useType = 'reject'
   const [confirm, setConfirm] = useState(false)
-  const [book, setBook] = useState()
+  const [book, setBook] = useState('Aastha')
   const dispatch = useDispatch()
   const { speak } = useSpeechSynthesis()
   useEffect(() => {
@@ -86,36 +86,39 @@ const GetBook = () => {
         })
         navigate('/textToSpeech')
       } else {
-        const data = await axios.put('http://localhost:5000/book/incBook', {
-          book: book,
-          author: author,
-        })
-
         const userData = await axios.get(
           `http://localhost:5000/users/getuser/${username}`,
         )
         let flag = 0
+        let id
+
         for (let i = 0; i < userData.data.books.length; i = i + 1) {
           if (userData.data.books[i].name === book) {
-            flag = userData.data.books[i].book_id
+            console.log(userData.data.books[i])
+            id = userData.data.books[i].book_id
+            flag = 1
             break
           }
         }
 
-        if (flag !== 0) {
+        if (flag === 0) {
           speak({
-            type:
+            text:
               'You dont have this book please verify and tap to speak author',
           })
           navigate('/getAuthor')
         }
+        const data = await axios.put('http://localhost:5000/book/incBook', {
+          book: book,
+          author: author,
+        })
 
         const removeBook = await axios.put(
           'http://localhost:5000/book/removeBook',
           {
             username: username,
             name: author,
-            book_id: flag,
+            book_id: id,
           },
         )
 
@@ -157,13 +160,18 @@ const GetBook = () => {
       {confirm ? (
         <Box sx={{ height: '100%', width: '100%' }}>
           {listening ? (
-            <Box sx={{ width: '100%', height: '100%' }}>
+            <Box
+              sx={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#007f5f',
+              }}
+            >
               <Button
                 sx={{
-                  fontSize: '100em',
                   width: '100%',
                   height: '100%',
-                  backgroundColor: '#fffff',
+                  color: '#ffff3f',
                 }}
                 onClick={stopCheck}
               >
@@ -186,16 +194,24 @@ const GetBook = () => {
       ) : (
         <Box sx={{ height: '100%', width: '100%' }}>
           {listening ? (
-            <Button
+            <Box
               sx={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: '#fffff',
+                backgroundColor: '#007f5f',
               }}
-              onClick={stopListenBook}
             >
-              <MicOffIcon />
-            </Button>
+              <Button
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  color: '#ffff3f',
+                }}
+                onClick={stopListenBook}
+              >
+                <MicOffIcon />
+              </Button>
+            </Box>
           ) : (
             <Button
               sx={{
@@ -205,6 +221,7 @@ const GetBook = () => {
               }}
               onClick={listenStart}
             >
+              Speak Name of your Book
               <KeyboardVoiceIcon />
             </Button>
           )}
