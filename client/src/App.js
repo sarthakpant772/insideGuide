@@ -19,6 +19,7 @@ import GetAuthor from './components/GetAuthor'
 import GetBook from './components/GetBook'
 import Check from './components/Check'
 import HomePage from './components/HomePage'
+import Return from './components/Return'
 const App = () => {
   return (
     <Box sx={{ margin: '0px' }}>
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="/getAuthor" element={<GetAuthor />} />
             <Route path="/getBook" element={<GetBook />} />
             <Route path="/getUseType" element={<Check />} />
+            <Route path="/return" element={<Return />} />
           </Routes>
         </Router>
       </Provider>

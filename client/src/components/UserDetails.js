@@ -1,18 +1,18 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
+import axios from 'axios'
 import React, { useState } from 'react'
 
 const UserDetails = () => {
   const [name, setname] = useState()
-  const details = [
-    {
-      name: 'lola',
-      author: 'sarthak',
-    },
-    {
-      name: 'savage',
-      author: 'aastha',
-    },
-  ]
+  const [details, setDetails] = useState([
+
+  ])
+
+  const handleSubmit = async () => {
+    const data = await axios.get(`http://localhost:5000/users/getuser/${name}`)
+    setDetails(data.data.books)
+  }
+
   return (
     <Box
       sx={{
@@ -51,7 +51,9 @@ const UserDetails = () => {
           >
             {name}
           </TextField>
-          <Button variant="contained">Search</Button>
+          <Button variant="contained" onClick={handleSubmit}>
+            Search
+          </Button>
         </Box>
       </Box>
       <Box

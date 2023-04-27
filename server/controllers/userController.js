@@ -52,6 +52,14 @@ const signin = async (req, res) => {
   }
 }
 
+const getUser = async (req, res) => {
+  const { name } = req.params
+  try {
+    const data = await userModel.findOne({ username: name })
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
-
-module.exports = { signup, signin }
+module.exports = { signup, signin, getUser }

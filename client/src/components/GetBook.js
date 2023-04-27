@@ -7,11 +7,20 @@ import SpeechRecognition, {
 import { useSpeechSynthesis } from 'react-speech-kit'
 import MicOffIcon from '@mui/icons-material/MicOff'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBookName, addName, getBookPath } from '../features/book/bookSlice'
+import {
+  addBookName,
+  addName,
+  addPath,
+  getBookPath,
+} from '../features/book/bookSlice'
 import { Navigate, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 const GetBook = () => {
   const navigate = useNavigate()
+  const useType = useSelector((state) => state.book.useType)
+  const username = useSelector((state) => state.book.userName)
+  // const username = 'Sarthak'
+  // const useType = 'reject'
   const [confirm, setConfirm] = useState(false)
   const [book, setBook] = useState()
   const dispatch = useDispatch()
@@ -19,8 +28,8 @@ const GetBook = () => {
   useEffect(() => {
     SpeechRecognition.stopListening()
   }, [book])
-  // const author = useSelector((state) => state.book.author)
-  const author = 'Aastha'
+  const author = useSelector((state) => state.book.author)
+  // const author = 'Aastha'
   const {
     transcript,
     listening,
@@ -32,19 +41,89 @@ const GetBook = () => {
     const token = localStorage.getItem('token')
     if (transcript === 'ok') {
       speak({ text: 'Book confirmed' })
-      dispatch(addBookName(book))
-      const bookData = await axios.post(
-        'http://localhost:5000/book/getBookByName',
-        {
+      if (useType === 'issue') {
+        dispatch(addBookName(book))
+        const bookData = await axios.post(
+          'http://localhost:5000/book/getBookByName',
+          {
+            book: book,
+            author: author,
+          },
+        )
+
+        if (bookData.data.quantity <= 0) {
+          speak({ text: 'book not available tap to speak author name' })
+          navigate('/getAuthor')
+        }
+
+        // console.log(bookData.data)
+
+        let pathData = await axios.get(
+          `http://localhost:5000/book/getPath/${bookData.data.shelfName}`,
+        )
+        // pathData = pathData
+        // console.log(pathData.data.path)
+        dispatch(addPath(pathData.data.path))
+
+        const issueData = await axios.put(
+          'http://localhost:5000/book/decBook',
+          {
+            book: book,
+            author: author,
+          },
+        )
+
+        const update = await axios.put('http://localhost:5000/book/issueBook', {
+          username: username,
+          name: author,
+          book_id: issueData._id,
+        })
+
+        // console.log(issueData)
+        speak({
+          text:
+            'tap on right for next direction and left for previous direction',
+        })
+        navigate('/textToSpeech')
+      } else {
+        const data = await axios.put('http://localhost:5000/book/incBook', {
           book: book,
           author: author,
-        },
-      )
-      console.log(bookData.data)
-      speak({
-        text: 'tap on right for next direction and left for previous direction',
-      })
-      navigate('/textToSpeech')
+        })
+
+        const userData = await axios.get(
+          `http://localhost:5000/users/getuser/${username}`,
+        )
+        let flag = 0
+        for (let i = 0; i < userData.data.books.length; i = i + 1) {
+          if (userData.data.books[i].name === book) {
+            flag = userData.data.books[i].book_id
+            break
+          }
+        }
+
+        if (flag !== 0) {
+          speak({
+            type:
+              'You dont have this book please verify and tap to speak author',
+          })
+          navigate('/getAuthor')
+        }
+
+        const removeBook = await axios.put(
+          'http://localhost:5000/book/removeBook',
+          {
+            username: username,
+            name: author,
+            book_id: flag,
+          },
+        )
+
+        speak({ type: 'Successfully returned book' })
+        speak({ type: 'Tap to speak useType else close the application' })
+
+        navigate('/getUseType')
+      }
     } else {
       setConfirm(false)
       speak({ text: 'tap to speak book name again' })

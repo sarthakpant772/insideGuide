@@ -1,9 +1,11 @@
 import { Box, Button, Container } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useSpeechSynthesis } from 'react-speech-kit'
 
 const TextToSpeech = () => {
+  const navigate = useNavigate()
   const name = useSelector((state) => state.book.author)
   const path = useSelector((state) => state.book.path)
   const [left, setLeft] = useState(false)
@@ -19,7 +21,18 @@ const TextToSpeech = () => {
 
   const handleOnClick = () => {
     console.log(path[1], stepNumber, 'check')
-    speak({ text: path[1][stepNumber] })
+    speak({ text: path[stepNumber] })
+    if (stepNumber >= path.length - 1) {
+      speak({
+        text:
+          'Thank you for choosing our library We are please to server you. You have 15 days to return this book',
+      })
+      speak({
+        text:
+          'Tap to choose useType of your next Step else close the application',
+      })
+      navigate('/getUseType')
+    }
     // console.log(path[1][stepNumber])
   }
 
@@ -33,8 +46,8 @@ const TextToSpeech = () => {
     // handleOnClick()
   }
   const nextStep = () => {
-    console.log('this is length', path[1].length)
-    if (stepNumber >= path[1].length - 1) {
+    console.log('this is length', path.length)
+    if (stepNumber >= path.length - 1) {
       setRight(false)
     } else {
       setSteoNumber(stepNumber + 1)
@@ -46,23 +59,6 @@ const TextToSpeech = () => {
 
   return (
     <div>
-      {/* <Container>
-        <h1> text to speech converter in react</h1>
-        <textarea
-          onChange={(e) => {
-            setText(e.target.value)
-          }}
-        ></textarea>
-        <Button
-          onClick={() => {
-            handleOnClick()
-          }}
-        >
-          {' '}
-          Listen
-        </Button>
-      </Container> */}
-
       <Box
         sx={{
           margin: 0,

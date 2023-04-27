@@ -6,11 +6,12 @@ import SpeechRecognition, {
 import { useSpeechSynthesis } from 'react-speech-kit'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
 import MicOffIcon from '@mui/icons-material/MicOff'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addAuthor } from '../features/book/bookSlice'
 import { useNavigate } from 'react-router-dom'
 
 const Return = () => {
+  const username = useSelector((state) => state.book.userName)
   const { speak } = useSpeechSynthesis()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -46,14 +47,15 @@ const Return = () => {
     if (transcript === 'ok') {
       speak({ text: 'author confirmed and book returned' })
       //   api of increasing
-
+      console.log(username)
+      // const user
       navigate('/getBook')
 
-      speak({text:'Tap to speak useType else close the '})
+      speak({ text: 'Tap to speak useType else close the ' })
     } else {
       setConfirm(false)
       speak({ text: 'tap to speak author name again' })
-    } 
+    }
   }
 
   return (
