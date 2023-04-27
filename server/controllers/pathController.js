@@ -18,8 +18,11 @@ const addpath =async(req,res)=>{
 }
 
 const getPath = async(req,res)=>{
+
+    const name =req.body.name
+
 try{
-        const data = await shelf.find()
+        const data = await shelf.findOne({name:name})
         res.status(200).json(data)
     }catch(err){
         console.log(err)
