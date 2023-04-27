@@ -30,19 +30,20 @@ const getAuthor=async (req,res)=>{
 
 
 
-const addBook=async (req,res)=>{
-    const data = await books({
-        book:req.body.book,
-        author:req.body.author,
-        quantity:req.body.quantity,
-        shelfName:req.body.shelf
-    })
-        try{
-            const savedData = await data.save()
-            res.status(201).json(savedData)
-        }catch(err){
-            res.status(500).json(err)
-        }
+const addBook = async (req, res) => {
+  const data = await books({
+    book: req.body.book,
+    author: req.body.author,
+    quantity: req.body.quantity,
+    shelfName: req.body.shelfName,
+  })
+ // console.log(data)
+  try {
+    const savedData = await data.save()
+    res.status(201).json(savedData)
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
 
 const getBook = async (req,res)=>{
@@ -104,7 +105,19 @@ const decBook= async(req,res)=>{
 
 }
 
-
+const getBookByName = async (req, res) => {
+  const { book, author } = req.body
+  //   console.log(req)
+  try {
+    const data = await books.findOne({
+      book: book,
+      author: author,
+    })
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
 
 
 module.exports={addAuthor,addBook,getAuthor,getBook,incBook,decBook}
