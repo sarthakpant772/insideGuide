@@ -20,7 +20,7 @@ const GetBook = () => {
   const useType = useSelector((state) => state.book.useType)
   const username = useSelector((state) => state.book.userName)
   // const username = 'Sarthak'
-  // const useType = 'reject'
+  // const useType = 'issue'
   const [confirm, setConfirm] = useState(false)
   const [book, setBook] = useState('Aastha')
   const dispatch = useDispatch()
@@ -40,9 +40,26 @@ const GetBook = () => {
   const stopCheck = async () => {
     const token = localStorage.getItem('token')
     if (transcript === 'ok') {
-      speak({ text: 'Book confirmed' })
       if (useType === 'issue') {
         dispatch(addBookName(book))
+        const checkAuthor = await axios.get(
+          `http://localhost:5000/book/checkAuthor/${author}`,
+        )
+        console.log(checkAuthor)
+        if (checkAuthor.data === null) {
+          speak({ text: 'Worng Author' })
+          navigate('/getAuthor')
+        }
+
+        const getBook = await axios.get(
+          `http://localhost:5000/book/checkBook/${author}/${book}`,
+        )
+        console.log(getBook)
+        if (getBook.data === null) {
+          speak({ text: 'Wrong Book' })
+          navigate('/getAuthor')
+        }
+
         const bookData = await axios.post(
           'http://localhost:5000/book/getBookByName',
           {

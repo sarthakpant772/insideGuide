@@ -113,6 +113,32 @@ const getBookByName = async (req, res) => {
   }
 }
 
+const checkAuthor = async (req, res) => {
+  const { name } = req.params
+
+  try {
+    const data = await author.findOne({
+      name: name,
+    })
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const checkBook = async (req, res) => {
+  const { name, book } = req.params
+  try {
+    const data = await books.findOne({
+      book: book,
+      author: name,
+    })
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 module.exports = {
   addAuthor,
   addBook,
@@ -120,5 +146,7 @@ module.exports = {
   getBook,
   incBook,
   decBook,
+  checkAuthor,
   getBookByName,
+  checkBook,
 }

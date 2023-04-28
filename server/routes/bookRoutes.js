@@ -8,6 +8,8 @@ const {
   incBook,
   decBook,
   getBook,
+  checkAuthor,
+  checkBook,
 } = require('../controllers/booksController')
 const auth = require('../middlewares/auth')
 const { addpath, getPath } = require('../controllers/pathController')
@@ -27,4 +29,6 @@ bookrouter.post('/addPath', addpath)
 bookrouter.get('/getPath/:name', getPath)
 bookrouter.put('/issueBook', issueBook)
 bookrouter.put('/removeBook', removeBook)
+bookrouter.get('/checkAuthor/:name', checkAuthor)
+bookrouter.get('/checkBook/:name/:book', checkBook)
 module.exports = bookrouter
